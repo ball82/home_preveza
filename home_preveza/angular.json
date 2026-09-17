@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "240b74ec-1c14-481a-b798-c829a339fbb7"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -35,7 +36,7 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": [".app.github.dev"]
+              "allowedHosts": []
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -51,8 +52,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "400kb",
+                  "maximumError": "800kb"
                 }
               ],
               "outputHashing": "all"
@@ -67,6 +68,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": ["localhost", ".app.github.dev"]
+          },
           "configurations": {
             "production": {
               "buildTarget": "home_preveza:build:production"
