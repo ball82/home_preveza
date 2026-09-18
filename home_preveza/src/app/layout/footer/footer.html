@@ -1,0 +1,18 @@
+<footer class="site-footer">
+  <div class="site-footer__brand">
+    <div class="site-footer__title">{{ site.brand.title }}</div>
+    <div class="site-footer__subtitle">{{ site.brand.subtitle }}</div>
+  </div>
+  <div class="site-footer__col">
+    <h4>Schnellzugriff</h4>
+    @for (link of quickLinks; track link.fragment) {
+      <a routerLink="/" [fragment]="link.fragment">{{ link.label }}</a>
+    }
+  </div>
+  <div class="site-footer__col">
+    <h4>Kontakt</h4>
+    <span>{{ site.contact.email }}</span>
+    <span>{{ site.contact.location }}</span>
+  </div>
+  <div class="site-footer__bottom">{{ site.copyright }}</div>
+</footer>

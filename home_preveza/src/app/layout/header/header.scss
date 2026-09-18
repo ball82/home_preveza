@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  /* Liegt transparent über dem Hero-Bild, darf also nicht überdeckt werden. */
+  position: relative;
+  z-index: 2;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem var(--page-inline);
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: white;
+  }
+
+  &__logo {
+    font-size: 1.4rem;
+  }
+
+  &__title {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  &__subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    opacity: 0.85;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 2rem;
+    color: white;
+    font-size: 0.95rem;
+
+    a.active {
+      border-bottom: 2px solid white;
+      padding-bottom: 0.25rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem var(--page-inline);
+
+    &__nav {
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}

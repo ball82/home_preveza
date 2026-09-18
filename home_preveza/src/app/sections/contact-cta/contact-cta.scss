@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.cta-banner {
+  position: relative;
+  padding: 5rem var(--page-inline);
+  color: white;
+  overflow: hidden;
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(20, 33, 45, 0.9) 0%, rgba(20, 33, 45, 0.55) 100%);
+    z-index: -1;
+  }
+
+  &__content {
+    max-width: 520px;
+
+    app-section-label {
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--text-on-dark);
+      margin: 0 0 1.5rem;
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: var(--navy);
+    padding: 0.85rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--text-on-dark);
+    }
+  }
+}

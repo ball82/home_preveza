@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+:host(.light) {
+  color: var(--accent-light);
+}

@@ -1,0 +1,11 @@
+/** Globaler Grundstock – gilt für das ganze Dokument, nicht für eine Komponente. */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--navy);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

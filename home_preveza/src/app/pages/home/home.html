@@ -1,0 +1,31 @@
+<app-hero
+  id="hero"
+  [image]="home.hero.image"
+  [eyebrow]="home.hero.eyebrow"
+  [title]="home.hero.title"
+  [text]="home.hero.text"
+  [ctaLabel]="home.hero.cta.label"
+  [ctaFragment]="home.hero.cta.fragment"
+  [hotspots]="home.hero.hotspots"
+/>
+
+<app-features [items]="home.features" />
+
+<app-gallery
+  id="galerie"
+  [label]="home.gallery.label"
+  [title]="home.gallery.title"
+  [text]="home.gallery.text"
+  [apartments]="home.gallery.apartments"
+  (apartmentSelected)="select($event)"
+/>
+
+<app-contact-cta
+  id="kontakt"
+  [image]="home.contactCta.image"
+  [label]="home.contactCta.label"
+  [title]="home.contactCta.title"
+  [text]="home.contactCta.text"
+  [buttonLabel]="home.contactCta.button"
+  [email]="site.contact.email"
+/>

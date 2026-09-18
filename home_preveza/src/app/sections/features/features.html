@@ -1,0 +1,9 @@
+<section class="features">
+  @for (item of items(); track item.title) {
+    <article class="feature">
+      <span class="feature__icon">{{ item.icon }}</span>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.text }}</p>
+    </article>
+  }
+</section>

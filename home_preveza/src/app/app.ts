@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Footer } from './layout/footer/footer';
+import { Header } from './layout/header/header';
 
+/** App-Shell: der Rahmen, der auf jeder Route gleich bleibt. */
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
+  imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
 })
-export class App {
-  protected readonly title = signal('home_preveza');
-}
+export class App {}

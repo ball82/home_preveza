@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
-import { Front } from './component/front/front';
+import { Home } from './pages/home/home';
 
-export const routes: Routes = [{ path: '', component: Front }];
+export const routes: Routes = [
+  { path: '', component: Home, title: 'Home Preveza – Ferienhaus in Griechenland' },
+  { path: '**', redirectTo: '' },
+];

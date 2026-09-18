@@ -1,0 +1,34 @@
+/**
+ * Design-Tokens – die einzige Quelle für Farben, Typo und Seitenmasse.
+ * CSS-Custom-Properties (statt SCSS-Variablen), weil sie durch das DOM
+ * vererbt werden und damit auch in jeder gekapselten Komponente gelten.
+ */
+:root {
+  --navy: #1c2b3a;
+  --navy-dark: #14212d;
+  --blue: #3d6a91;
+  --blue-dark: #345a7b;
+
+  --text-light: #f3f6f8;
+  --text-on-dark: #e6edf2;
+  --text-muted: #6b7a86;
+  --accent-light: #cfe0ee;
+
+  --surface: #f6f8fa;
+  --hotspot: #5de05d;
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Horizontaler Seitenrand: wird unten für Mobile überschrieben,
+     dadurch braucht keine Section eine eigene Media-Query dafür. */
+  --page-inline: 3rem;
+
+  /* Höhe des transparenten Headers, der über dem Hero liegt. */
+  --header-height: 5.5rem;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-inline: 1.25rem;
+  }
+}

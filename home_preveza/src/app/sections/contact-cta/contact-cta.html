@@ -1,0 +1,13 @@
+<section class="cta-banner">
+  <img class="cta-banner__image" [src]="image().src" [alt]="image().alt" />
+  <div class="cta-banner__overlay"></div>
+  <div class="cta-banner__content">
+    <app-section-label light>{{ label() }}</app-section-label>
+    <h2>{{ title() }}</h2>
+    <p>{{ text() }}</p>
+    <a class="cta-banner__button" [href]="'mailto:' + email()">
+      {{ buttonLabel() }}
+      <span>&rarr;</span>
+    </a>
+  </div>
+</section>

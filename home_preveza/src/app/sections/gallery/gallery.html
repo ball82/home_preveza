@@ -1,0 +1,37 @@
+<section class="gallery">
+  <div class="gallery__intro">
+    <app-section-label>{{ label() }}</app-section-label>
+    <h2>{{ title() }}</h2>
+    <p>{{ text() }}</p>
+  </div>
+
+  <ul class="gallery__grid">
+    @for (apartment of apartments(); track apartment.id) {
+      <li [id]="apartment.id">
+        <button
+          type="button"
+          class="apartment"
+          [attr.aria-label]="'Galerie von ' + apartment.name + ' öffnen'"
+          (click)="apartmentSelected.emit(apartment)"
+        >
+          <span class="apartment__media">
+            <img [src]="apartment.cover.src" [alt]="apartment.cover.alt" loading="lazy" />
+            <span class="apartment__floor">{{ apartment.floor }}</span>
+          </span>
+
+          <span class="apartment__body">
+            <span class="apartment__head">
+              <span class="apartment__name">{{ apartment.name }}</span>
+              <span class="apartment__size">{{ apartment.size }}</span>
+            </span>
+            <span class="apartment__text">{{ apartment.text }}</span>
+            <span class="apartment__more">
+              {{ apartment.images.length }} Bilder ansehen
+              <span aria-hidden="true">&rarr;</span>
+            </span>
+          </span>
+        </button>
+      </li>
+    }
+  </ul>
+</section>

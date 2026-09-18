@@ -1,0 +1,36 @@
+<section class="hero">
+  <img class="hero__image" [src]="image().src" [alt]="image().alt" />
+  <div class="hero__overlay"></div>
+
+  <div class="hero__hotspots">
+    <!-- Rahmen mit der Geometrie des Bildes – die Hotspot-Prozente beziehen sich darauf. -->
+    <div class="hero__hotspots-frame">
+      @for (spot of hotspots(); track spot.name) {
+        <a
+          class="hotspot"
+          routerLink="/"
+          [fragment]="spot.id"
+          [style.top.%]="spot.top"
+          [style.left.%]="spot.left"
+          [style.width.%]="spot.width"
+          [style.height.%]="spot.height"
+        >
+          <span class="hotspot__label">
+            <span class="hotspot__name">{{ spot.name }}</span>
+            <span class="hotspot__size">{{ spot.size }}</span>
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="hero__content">
+    <app-section-label light>{{ eyebrow() }}</app-section-label>
+    <h1>{{ title() }}</h1>
+    <p>{{ text() }}</p>
+    <a class="hero__cta" routerLink="/" [fragment]="ctaFragment()">
+      {{ ctaLabel() }}
+      <span>&rarr;</span>
+    </a>
+  </div>
+</section>

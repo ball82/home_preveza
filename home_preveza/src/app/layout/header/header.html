@@ -1,0 +1,16 @@
+<header class="site-header">
+  <div class="site-header__brand">
+    <span class="site-header__logo">{{ site.brand.logo }}</span>
+    <div>
+      <div class="site-header__title">{{ site.brand.title }}</div>
+      <div class="site-header__subtitle">{{ site.brand.subtitle }}</div>
+    </div>
+  </div>
+  <nav class="site-header__nav">
+    @for (link of site.nav; track link.fragment) {
+      <a routerLink="/" [fragment]="link.fragment" [class.active]="isActive(link.fragment)">
+        {{ link.label }}
+      </a>
+    }
+  </nav>
+</header>

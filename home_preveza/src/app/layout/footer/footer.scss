@@ -1,0 +1,66 @@
+:host {
+  display: block;
+}
+
+.site-footer {
+  background: var(--navy-dark);
+  color: #cfd8df;
+  padding: 3rem var(--page-inline) 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+
+  &__brand {
+    color: white;
+  }
+
+  &__title {
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  &__subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    opacity: 0.85;
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    h4 {
+      color: white;
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    a,
+    span {
+      font-size: 0.9rem;
+      color: #b9c4cc;
+    }
+  }
+
+  &__bottom {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    font-size: 0.8rem;
+    color: #8695a0;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-footer {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-footer {
+    grid-template-columns: 1fr;
+  }
+}

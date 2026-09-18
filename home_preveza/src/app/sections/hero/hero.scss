@@ -1,0 +1,169 @@
+:host {
+  display: block;
+  /* Zieht den Hero unter den transparenten Header, der darüber liegt. */
+  margin-top: calc(var(--header-height) * -1);
+
+  /* Seitenverhältnis von hero.png (1448 x 1086 px). Muss mitgeändert
+     werden, wenn das Hero-Bild ausgetauscht wird – sonst sitzen die
+     Hotspots daneben. */
+  --hero-image-ratio: 1.3333;
+}
+
+.hero {
+  position: relative;
+  min-height: 640px;
+  padding-top: var(--header-height);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: white;
+  overflow: hidden;
+
+  &__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(20, 33, 45, 0.75) 0%,
+      rgba(20, 33, 45, 0.35) 55%,
+      rgba(20, 33, 45, 0.55) 100%
+    );
+    z-index: -1;
+  }
+
+  &__content {
+    max-width: 560px;
+    padding: 5rem var(--page-inline);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1.1rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    line-height: 1.2;
+    margin: 0;
+    text-align: right;
+  }
+
+  p {
+    line-height: 1.6;
+    color: var(--text-on-dark);
+    margin: 0;
+    text-align: right;
+  }
+
+  &__hotspots {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    container-type: size;
+  }
+
+  /**
+   * Bildet die Geometrie von `object-fit: cover` nach: so gross wie nötig,
+   * um die Box zu füllen, im Seitenverhältnis des Bildes, mittig beschnitten.
+   * Dadurch beziehen sich die Hotspot-Prozente auf das *Bild* statt auf die
+   * Hero-Box – sie sitzen bei jeder Fensterbreite an derselben Stelle am Haus.
+   */
+  &__hotspots-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max(100cqw, calc(100cqh * var(--hero-image-ratio)));
+    aspect-ratio: var(--hero-image-ratio);
+  }
+
+  &__cta {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue);
+    color: white;
+    padding: 0.85rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    width: fit-content;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: var(--blue-dark);
+    }
+  }
+}
+
+.hotspot {
+  position: absolute;
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  border: 3px solid rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  background: rgba(93, 224, 93, 0);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0.6rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(20, 33, 45, 0.72);
+    color: white;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  &__size {
+    font-size: 0.8rem;
+    color: var(--accent-light);
+  }
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--hotspot);
+    background: rgba(93, 224, 93, 0.22);
+    box-shadow: 0 0 18px rgba(93, 224, 93, 0.35);
+    outline: none;
+
+    .hotspot__label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .hero__content {
+    padding: 4rem var(--page-inline);
+  }
+}
