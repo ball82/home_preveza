@@ -7,6 +7,7 @@
   [ctaLabel]="home.hero.cta.label"
   [ctaFragment]="home.hero.cta.fragment"
   [hotspots]="home.hero.hotspots"
+  (hotspotSelected)="selectById($event)"
 />
 
 <app-features [items]="home.features" />
@@ -20,6 +21,16 @@
   (apartmentSelected)="select($event)"
 />
 
+<app-location
+  id="lage"
+  [label]="home.location.label"
+  [title]="home.location.title"
+  [text]="home.location.text"
+  [facts]="home.location.facts"
+  [mapUrl]="home.location.map.url"
+  [mapTitle]="home.location.map.title"
+/>
+
 <app-contact-cta
   id="kontakt"
   [image]="home.contactCta.image"
@@ -29,3 +40,5 @@
   [buttonLabel]="home.contactCta.button"
   [email]="site.contact.email"
 />
+
+<app-apartment-dialog [apartment]="selected()" (closed)="selected.set(null)" />

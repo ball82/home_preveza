@@ -4,7 +4,7 @@ import { APARTMENTS } from './apartments-content';
 /**
  * Lage der vier Wohnungen im Hero-Bild.
  *
- * Prozentwerte beziehen sich auf hero.png (1448 x 1086 px), nicht auf die
+ * Prozentwerte beziehen sich auf hero.webp (1448 x 1086 px), nicht auf die
  * Hero-Box. Gemessen am Bild:
  *   Dachkante 25.7 % · Decke Erdgeschoss 60.8 % · Rasenkante 69.1 %
  *   Trennwand zwischen linker und rechter Haushälfte 42.7 %
@@ -22,7 +22,7 @@ const HOTSPOT_GEOMETRY: Record<string, Pick<Hotspot, 'top' | 'left' | 'width' | 
  */
 export const HOME = {
   hero: {
-    image: { src: 'img/hero.png', alt: 'Haus Aussenansicht mit Garten' },
+    image: { src: 'img/hero.webp', alt: 'Haus Aussenansicht mit Garten' },
     eyebrow: 'ZU VERMIETEN',
     title: 'Ferienhaus in Preveza mit Garten und Terrasse',
     text:
@@ -55,8 +55,29 @@ export const HOME = {
     apartments: APARTMENTS,
   },
 
+  location: {
+    label: 'DIE LAGE',
+    title: 'Preveza – zwischen Ionischem Meer und Ambrakischem Golf',
+    text:
+      'Das Haus liegt ruhig in Preveza, wenige Minuten vom Zentrum und von den Stränden ' +
+      'entfernt. Tavernen, Einkaufsmöglichkeiten und der Hafen sind schnell erreicht.',
+    facts: [
+      { icon: '🏖️', text: 'Wenige Minuten bis zum Strand' },
+      { icon: '🍽️', text: 'Tavernen und Altstadt in der Nähe' },
+      { icon: '✈️', text: 'Flughafen Preveza/Aktion in ca. 15 Minuten' },
+      { icon: '🚗', text: 'Eigener Parkplatz direkt beim Haus' },
+    ],
+    map: {
+      title: 'Google Maps – Lage des Ferienhauses in Preveza',
+      url:
+        'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1569.8938249960415!2d20.730112688432815' +
+        '!3d38.97826387733974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1' +
+        '!2zMzjCsDU4JzQ0LjAiTiAyMMKwNDMnNDguNCJF!5e1!3m2!1sde!2sch!4v1789820303021!5m2!1sde!2sch',
+    },
+  },
+
   contactCta: {
-    image: { src: 'img/wohnen_balkon_1.jpeg', alt: 'Terrasse' },
+    image: { src: 'img/wohnen_balkon_1.webp', alt: 'Terrasse' },
     label: 'INTERESSIERT?',
     title: 'Jetzt Aufenthalt anfragen',
     text:

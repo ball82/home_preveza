@@ -44,6 +44,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/home_preveza/",
               "budgets": [
                 {
                   "type": "initial",
@@ -69,7 +70,10 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": ["localhost", ".app.github.dev"]
+            "allowedHosts": [
+              "localhost",
+              ".app.github.dev"
+            ]
           },
           "configurations": {
             "production": {

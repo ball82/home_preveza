@@ -1,25 +1,33 @@
 <section class="hero">
-  <img class="hero__image" [src]="image().src" [alt]="image().alt" />
+  <!-- LCP-Element: nicht lazy, hohe Ladepriorität. Vorgeladen in index.html. -->
+  <img
+    class="hero__image"
+    [src]="image().src"
+    [alt]="image().alt"
+    fetchpriority="high"
+    decoding="sync"
+  />
   <div class="hero__overlay"></div>
 
   <div class="hero__hotspots">
     <!-- Rahmen mit der Geometrie des Bildes – die Hotspot-Prozente beziehen sich darauf. -->
     <div class="hero__hotspots-frame">
-      @for (spot of hotspots(); track spot.name) {
-        <a
+      @for (spot of hotspots(); track spot.id) {
+        <button
+          type="button"
           class="hotspot"
-          routerLink="/"
-          [fragment]="spot.id"
+          [attr.aria-label]="'Galerie von ' + spot.name + ' öffnen'"
           [style.top.%]="spot.top"
           [style.left.%]="spot.left"
           [style.width.%]="spot.width"
           [style.height.%]="spot.height"
+          (click)="hotspotSelected.emit(spot.id)"
         >
           <span class="hotspot__label">
             <span class="hotspot__name">{{ spot.name }}</span>
             <span class="hotspot__size">{{ spot.size }}</span>
           </span>
-        </a>
+        </button>
       }
     </div>
   </div>

@@ -1,0 +1,26 @@
+<section class="location">
+  <div class="location__intro">
+    <app-section-label>{{ label() }}</app-section-label>
+    <h2>{{ title() }}</h2>
+    <p>{{ text() }}</p>
+
+    <ul class="location__facts">
+      @for (fact of facts(); track fact.text) {
+        <li>
+          <span class="location__fact-icon" aria-hidden="true">{{ fact.icon }}</span>
+          {{ fact.text }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="location__map">
+    <iframe
+      [src]="safeMapUrl()"
+      [title]="mapTitle()"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+</section>

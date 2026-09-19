@@ -1,0 +1,318 @@
+/* Kein Padding am <dialog> selbst: so ist jeder Klick daneben ein Backdrop-Klick. */
+.dialog {
+  width: min(1040px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--navy);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+
+  &::backdrop {
+    background: rgba(20, 33, 45, 0.7);
+    backdrop-filter: blur(2px);
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 2rem);
+  }
+
+  /* Bleibt beim Scrollen der Bilder stehen. */
+  &__head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem var(--page-inline);
+    background: var(--navy);
+    color: var(--text-light);
+  }
+
+  &__heading h2 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  &__meta {
+    margin: 0.2rem 0 0;
+    color: var(--accent-light);
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+
+  &__close {
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    color: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--hotspot);
+      outline-offset: 2px;
+    }
+  }
+
+  &__body {
+    overflow-y: auto;
+    padding: 1.5rem var(--page-inline) 2rem;
+  }
+
+  &__text {
+    margin: 0 0 1.5rem;
+    max-width: 62ch;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  &__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+
+    li {
+      display: flex;
+    }
+  }
+
+  /* Eine Kachel im Raster – Klick öffnet die Grossansicht. */
+  &__thumb {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface);
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+  }
+
+  /* Bildunterschrift über dem unteren Bildrand. */
+  &__caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 0.45rem 0.7rem;
+    background: linear-gradient(180deg, rgba(20, 33, 45, 0), rgba(20, 33, 45, 0.8));
+    color: var(--text-light);
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  /* Hinweis, solange eine Wohnung noch keine Fotos hat (Wohnung 3). */
+  &__pending {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px dashed rgba(61, 106, 145, 0.45);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  &__pending-icon {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 600px) {
+  .dialog {
+    width: 100vw;
+    max-height: 100dvh;
+    border-radius: 0;
+
+    &__panel {
+      max-height: 100dvh;
+    }
+
+    &__grid img {
+      height: 220px;
+    }
+  }
+}
+
+/**
+ * Grossansicht eines einzelnen Bildes – liegt als zweites <dialog> über dem
+ * ersten. `display` wird nur mit `[open]` gesetzt, sonst überschriebe die
+ * Regel das `display: none` des Browsers für den geschlossenen Zustand.
+ */
+.lightbox {
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+
+  &[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  &::backdrop {
+    background: rgba(12, 20, 28, 0.92);
+  }
+
+  &__figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    max-width: calc(100vw - 8rem);
+
+    img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100dvh - 9rem);
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    figcaption {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+  }
+
+  &__counter {
+    color: var(--accent-light);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+  }
+
+  &__close,
+  &__nav {
+    position: absolute;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--text-light);
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--hotspot);
+      outline-offset: 3px;
+    }
+  }
+
+  &__close {
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.8rem;
+  }
+
+  &__nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3.25rem;
+    height: 3.25rem;
+    /* Optischer Ausgleich: die Chevrons sitzen sonst zu tief. */
+    font-size: 2.6rem;
+
+    span {
+      margin-top: -0.22em;
+    }
+
+    &--prev {
+      left: 1rem;
+    }
+
+    &--next {
+      right: 1rem;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .lightbox {
+    &__figure {
+      max-width: calc(100vw - 1.5rem);
+
+      img {
+        max-height: calc(100dvh - 11rem);
+      }
+    }
+
+    /* Auf schmalen Schirmen unter das Bild statt daneben. */
+    &__nav {
+      top: auto;
+      bottom: 1.25rem;
+      transform: none;
+      width: 2.9rem;
+      height: 2.9rem;
+
+      &--prev {
+        left: calc(50% - 4rem);
+      }
+
+      &--next {
+        right: calc(50% - 4rem);
+      }
+    }
+  }
+}

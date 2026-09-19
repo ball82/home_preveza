@@ -11,11 +11,20 @@
         <button
           type="button"
           class="apartment"
+          [class.apartment--pending]="!apartment.images.length"
           [attr.aria-label]="'Galerie von ' + apartment.name + ' öffnen'"
           (click)="apartmentSelected.emit(apartment)"
         >
           <span class="apartment__media">
-            <img [src]="apartment.cover.src" [alt]="apartment.cover.alt" loading="lazy" />
+            @if (apartment.cover; as cover) {
+              <img [src]="cover.thumb || cover.src" [alt]="cover.alt" loading="lazy" />
+            } @else {
+              <!-- Noch keine Fotos (Wohnung 3) – Platzhalter statt leerer Fläche. -->
+              <span class="apartment__placeholder">
+                <span class="apartment__placeholder-icon" aria-hidden="true">📷</span>
+                <span>Bilder folgen</span>
+              </span>
+            }
             <span class="apartment__floor">{{ apartment.floor }}</span>
           </span>
 
@@ -26,7 +35,11 @@
             </span>
             <span class="apartment__text">{{ apartment.text }}</span>
             <span class="apartment__more">
-              {{ apartment.images.length }} Bilder ansehen
+              @if (apartment.images.length) {
+                {{ apartment.images.length }} Bilder ansehen
+              } @else {
+                Bilder folgen in Kürze
+              }
               <span aria-hidden="true">&rarr;</span>
             </span>
           </span>

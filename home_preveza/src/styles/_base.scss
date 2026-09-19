@@ -9,3 +9,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Hintergrund nicht mitscrollen, solange ein modaler Dialog offen ist. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}

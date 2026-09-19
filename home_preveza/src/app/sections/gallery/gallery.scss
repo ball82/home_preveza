@@ -81,6 +81,30 @@
     }
   }
 
+  /* Steht anstelle des Bildes, solange eine Wohnung keine Fotos hat. */
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 230px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--surface),
+      var(--surface) 12px,
+      #eef2f6 12px,
+      #eef2f6 24px
+    );
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  &__placeholder-icon {
+    font-size: 1.9rem;
+  }
+
   &__floor {
     position: absolute;
     top: 0.75rem;
@@ -139,6 +163,10 @@
   &:hover &__more span,
   &:focus-visible &__more span {
     transform: translateX(4px);
+  }
+
+  &--pending &__more {
+    color: var(--text-muted);
   }
 }
 

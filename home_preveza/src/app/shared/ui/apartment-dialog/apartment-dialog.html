@@ -1,0 +1,82 @@
+<dialog
+  #dialog
+  class="dialog"
+  aria-labelledby="apartment-dialog-title"
+  (close)="onClosed()"
+  (click)="onBackdropClick($event)"
+>
+  @if (apartment(); as apartment) {
+    <div class="dialog__panel">
+      <header class="dialog__head">
+        <div class="dialog__heading">
+          <h2 id="apartment-dialog-title">{{ apartment.name }}</h2>
+          <p class="dialog__meta">{{ apartment.floor }} · {{ apartment.size }}</p>
+        </div>
+
+        <button type="button" class="dialog__close" aria-label="Galerie schliessen" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+
+      <div class="dialog__body">
+        <p class="dialog__text">{{ apartment.text }}</p>
+
+        @if (apartment.images.length) {
+          <ul class="dialog__grid">
+            @for (image of apartment.images; track image.src; let i = $index) {
+              <li>
+                <button
+                  type="button"
+                  class="dialog__thumb"
+                  [attr.aria-label]="image.alt + ' vergrössern'"
+                  (click)="openLightbox(i)"
+                >
+                  <img [src]="image.thumb || image.src" [alt]="apartment.name + ' – ' + image.alt" loading="lazy" />
+                  <span class="dialog__caption">{{ image.alt }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="dialog__pending">
+            <span class="dialog__pending-icon" aria-hidden="true">📷</span>
+            {{ apartment.pendingNote }}
+          </p>
+        }
+      </div>
+    </div>
+  }
+</dialog>
+
+<!-- Zweite Ebene über dem Dialog: das einzelne Bild gross. -->
+<dialog
+  #lightbox
+  class="lightbox"
+  aria-label="Bild in Grossansicht"
+  (close)="lightboxIndex.set(null)"
+  (click)="onLightboxBackdropClick($event)"
+  (keydown)="onLightboxKeydown($event)"
+>
+  @if (lightboxImage(); as image) {
+    <button type="button" class="lightbox__close" aria-label="Grossansicht schliessen" (click)="closeLightbox()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    @if (images().length > 1) {
+      <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="Vorheriges Bild" (click)="step(-1)">
+        <span aria-hidden="true">&lsaquo;</span>
+      </button>
+      <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="Nächstes Bild" (click)="step(1)">
+        <span aria-hidden="true">&rsaquo;</span>
+      </button>
+    }
+
+    <figure class="lightbox__figure">
+      <img [src]="image.src" [alt]="image.alt" />
+      <figcaption>
+        <span>{{ image.alt }}</span>
+        <span class="lightbox__counter">{{ lightboxIndex()! + 1 }} / {{ images().length }}</span>
+      </figcaption>
+    </figure>
+  }
+</dialog>

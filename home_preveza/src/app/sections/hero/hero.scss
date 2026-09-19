@@ -3,7 +3,7 @@
   /* Zieht den Hero unter den transparenten Header, der darüber liegt. */
   margin-top: calc(var(--header-height) * -1);
 
-  /* Seitenverhältnis von hero.png (1448 x 1086 px). Muss mitgeändert
+  /* Seitenverhältnis von hero.webp (1448 x 1086 px). Muss mitgeändert
      werden, wenn das Hero-Bild ausgetauscht wird – sonst sitzen die
      Hotspots daneben. */
   --hero-image-ratio: 1.3333;
@@ -113,6 +113,11 @@
   pointer-events: auto;
   display: flex;
   align-items: flex-start;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
   border: 3px solid rgba(255, 255, 255, 0);
   border-radius: 10px;
   background: rgba(93, 224, 93, 0);

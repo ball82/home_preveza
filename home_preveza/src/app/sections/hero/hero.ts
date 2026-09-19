@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Hotspot } from '../../core/models';
 import { SectionLabel } from '../../shared/ui/section-label/section-label';
@@ -17,4 +17,7 @@ export class Hero {
   readonly ctaLabel = input.required<string>();
   readonly ctaFragment = input.required<string>();
   readonly hotspots = input<Hotspot[]>([]);
+
+  /** Id der angeklickten Wohnung – die Seite öffnet damit den Galerie-Dialog. */
+  readonly hotspotSelected = output<string>();
 }
