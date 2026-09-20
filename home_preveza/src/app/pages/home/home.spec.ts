@@ -1,3 +1,5 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { HOME } from '../../core/content/home-content';
@@ -7,7 +9,7 @@ describe('Home', () => {
   it('rendert alle Sections mit den Inhalten aus home-content', async () => {
     await TestBed.configureTestingModule({
       imports: [Home],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(Home);

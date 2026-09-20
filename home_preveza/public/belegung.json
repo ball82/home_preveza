@@ -1,0 +1,10 @@
+{
+  "hinweis": "Belegte Zeiträume. 'from' ist der Anreisetag (belegt), 'to' der Abreisetag (wieder frei). 'apartmentId' muss zur Wohnung passen: wohnung-1, wohnung-2, wohnung-3, wohnung-4. Datum immer als JJJJ-MM-TT. Diese Datei kann direkt auf dem Server ersetzt werden, die Seite muss dafür nicht neu gebaut werden.",
+  "belegungen": [
+    { "apartmentId": "wohnung-1", "from": "2026-09-26", "to": "2026-10-04" },
+    { "apartmentId": "wohnung-1", "from": "2026-10-17", "to": "2026-10-24" },
+    { "apartmentId": "wohnung-2", "from": "2026-10-02", "to": "2026-10-09" },
+    { "apartmentId": "wohnung-3", "from": "2026-09-20", "to": "2026-09-27" },
+    { "apartmentId": "wohnung-4", "from": "2026-10-10", "to": "2026-10-20" }
+  ]
+}

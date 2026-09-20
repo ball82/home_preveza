@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { Apartment } from '../../core/models';
 import { HOME } from '../../core/content/home-content';
 import { SITE } from '../../core/content/site-content';
+import { Availability } from '../../sections/availability/availability';
 import { ContactCta } from '../../sections/contact-cta/contact-cta';
 import { Features } from '../../sections/features/features';
 import { Gallery } from '../../sections/gallery/gallery';
@@ -12,7 +13,7 @@ import { ApartmentDialog } from '../../shared/ui/apartment-dialog/apartment-dial
 /** Startseite: hält die Inhalte und setzt daraus die Sections zusammen. */
 @Component({
   selector: 'app-home',
-  imports: [Hero, Features, Gallery, Location, ContactCta, ApartmentDialog],
+  imports: [Hero, Features, Gallery, Location, Availability, ContactCta, ApartmentDialog],
   templateUrl: './home.html',
 })
 export class Home {

@@ -76,6 +76,18 @@ export const HOME = {
     },
   },
 
+  availability: {
+    label: 'VERFÜGBARKEIT',
+    title: 'Ist Ihr Wunschtermin frei?',
+    text:
+      'Wählen Sie die Wohnung und klicken Sie Anreise- und Abreisetag an. Der Kalender zeigt ' +
+      'sofort, ob der Zeitraum noch frei ist – und übernimmt ihn direkt in Ihre Anfrage.',
+    note:
+      'Der Kalender zeigt den aktuellen Stand, ist aber keine verbindliche Buchung. ' +
+      'Verbindlich wird ein Aufenthalt erst mit unserer Bestätigung per E-Mail.',
+    button: 'Zeitraum anfragen',
+  },
+
   contactCta: {
     image: { src: 'img/wohnen_balkon_1.webp', alt: 'Terrasse' },
     label: 'INTERESSIERT?',

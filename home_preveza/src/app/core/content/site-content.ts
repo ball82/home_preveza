@@ -5,13 +5,12 @@ export const SITE = {
   brand: {
     logo: '🏡',
     title: 'HOME PREVEZA',
-    subtitle: 'FERIENHAUS · GRIECHENLAND · MEERBLICK',
+    subtitle: 'FERIENHAUS · GRIECHENLAND · MIT GARTEN UND TERRASSE',
   },
   nav: [
-    { label: 'Startseite', fragment: 'hero' },
-    { label: 'Zimmer', fragment: 'zimmer' },
-    { label: 'Lage', fragment: 'lage' },
     { label: 'Galerie', fragment: 'galerie' },
+    { label: 'Lage', fragment: 'lage' },
+    { label: 'Verfügbarkeit', fragment: 'verfuegbarkeit' },
     { label: 'Kontakt', fragment: 'kontakt' },
   ] satisfies NavLink[],
   contact: {

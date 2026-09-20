@@ -1,0 +1,102 @@
+<section class="availability">
+  <div class="availability__intro">
+    <app-section-label>{{ label() }}</app-section-label>
+    <h2>{{ title() }}</h2>
+    <p>{{ text() }}</p>
+  </div>
+
+  <div class="availability__panel">
+    <label class="availability__picker">
+      <span>Wohnung</span>
+      <select [value]="apartmentId()" (change)="changeApartment($any($event.target).value)">
+        @for (apartment of apartments(); track apartment.id) {
+          <option [value]="apartment.id">{{ apartment.name }}</option>
+        }
+      </select>
+    </label>
+
+    <div class="availability__monthbar">
+      <button
+        type="button"
+        [disabled]="!canGoBack()"
+        (click)="shiftMonth(-1)"
+        aria-label="Vorheriger Monat"
+      >
+        &larr;
+      </button>
+      <strong aria-live="polite">{{ monthTitle() }}</strong>
+      <button
+        type="button"
+        [disabled]="!canGoForward()"
+        (click)="shiftMonth(1)"
+        aria-label="Nächster Monat"
+      >
+        &rarr;
+      </button>
+    </div>
+
+    @if (status() === 'error') {
+      <p class="availability__message">
+        Die Belegung konnte gerade nicht geladen werden. Schreiben Sie uns einfach – wir prüfen den
+        Zeitraum von Hand.
+      </p>
+    } @else {
+      <div class="availability__grid" [class.is-loading]="status() === 'loading'">
+        @for (weekday of weekdays; track weekday) {
+          <div class="availability__weekday">{{ weekday }}</div>
+        }
+        @for (week of weeks(); track $index) {
+          @for (day of week; track $index) {
+            @if (day === null) {
+              <div class="availability__empty"></div>
+            } @else {
+              <button
+                type="button"
+                class="availability__day"
+                [class.is-booked]="day.booked"
+                [class.is-past]="day.past"
+                [class.is-range]="day.inRange"
+                [class.is-edge]="day.isArrival || day.isDeparture"
+                [disabled]="day.past || day.booked"
+                [attr.aria-pressed]="day.isArrival || day.isDeparture || day.inRange"
+                [attr.aria-label]="formatDe(day.iso) + (day.booked ? ' – belegt' : ' – frei')"
+                (click)="select(day)"
+              >
+                {{ day.number }}
+              </button>
+            }
+          }
+        }
+      </div>
+
+      <ul class="availability__legend">
+        <li><span class="availability__swatch"></span>frei</li>
+        <li><span class="availability__swatch is-booked"></span>belegt</li>
+        <li><span class="availability__swatch is-edge"></span>Ihre Auswahl</li>
+      </ul>
+    }
+
+    <div class="availability__result" aria-live="polite">
+      @if (requestLink(); as link) {
+        <p class="availability__summary">
+          <strong>{{ apartmentName() }}</strong> frei: {{ formatDe(arrival()!) }} &ndash;
+          {{ formatDe(departure()!) }} ({{ nights() }} {{ nights() === 1 ? 'Nacht' : 'Nächte' }})
+        </p>
+        <div class="availability__actions">
+          <a class="availability__button" [href]="link">{{ buttonLabel() }}</a>
+          <button type="button" class="availability__reset" (click)="clear()">
+            Auswahl löschen
+          </button>
+        </div>
+      } @else if (arrival()) {
+        <p class="availability__summary">
+          Anreise {{ formatDe(arrival()!) }} &ndash; jetzt den Abreisetag wählen.
+        </p>
+      } @else {
+        <p class="availability__hint">Anreisetag anklicken, danach den Abreisetag.</p>
+      }
+    </div>
+
+    <p class="availability__note">{{ note() }}</p>
+  </div>
+</section>

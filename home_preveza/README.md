@@ -54,6 +54,12 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## Belegungskalender
+
+Die Verfügbarkeiten auf der Startseite kommen aus `public/belegung.json` und
+können auf dem Server ersetzt werden, ohne die Seite neu zu bauen. Aufbau der
+Datei und Funktionsweise: [docs/belegungskalender.md](docs/belegungskalender.md).
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
