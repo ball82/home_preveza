@@ -1,8 +1,16 @@
 # Belegungskalender
 
 Zeigt auf der Startseite unter `#verfuegbarkeit`, welche Nächte pro Wohnung frei
-sind. Der Besucher wählt die Wohnung im Dropdown, klickt Anreise- und Abreisetag
-an und bekommt daraus eine vorausgefüllte Anfrage-Mail.
+sind. Der Abschnitt führt den Besucher in drei Schritten durch die Anfrage:
+Wohnung und Zeitraum im Kalender wählen, Erwachsene und Kinder angeben, Kontakt
+aufnehmen. Der Kontakt-Button ist gesperrt, solange kein vollständiger Zeitraum
+gewählt ist – daraus entsteht sonst eine Anfrage ohne Datum. Klickbar erzeugt er
+eine vorausgefüllte Mail mit Wohnung, Anreise, Abreise, Nächten, Erwachsenen und
+Kindern.
+
+Kalender und Kontakt-Aufruf sind ein einziger Abschnitt. Die Sprungmarke
+`#kontakt` aus Navigation und Hero zeigt auf das Formular-Panel innerhalb des
+Abschnitts, damit die bestehenden Links weiter funktionieren.
 
 **Das ist keine Buchung.** Es gibt kein Backend, das einen Zeitraum reservieren
 könnte. Verbindlich wird ein Aufenthalt erst mit der Bestätigung per E-Mail.
@@ -126,6 +134,18 @@ Eine **neue** Auswahl beginnt, wenn noch nichts gewählt ist, der Zeitraum schon
 vollständig war, der Klick vor der bisherigen Anreise liegt, oder dazwischen eine
 belegte Nacht läge. Ein Wohnungswechsel löscht die Auswahl, weil derselbe
 Zeitraum in der anderen Wohnung belegt sein kann.
+
+### Gästezahl und Kontakt-Button
+
+Zwei Zähler: Erwachsene (mindestens 1, höchstens 12) und Kinder (0 bis 12). Die
+Gästezahl braucht keine Prüfung gegen den Kalender, deshalb löscht `clear()` nur
+den Zeitraum – wer weitersucht, muss die Personen nicht neu eintippen.
+
+`requestLink()` ist die einzige Stelle, die beides zusammenführt: ist kein
+vollständiger Zeitraum gewählt, liefert es `null`. Das Template zeigt dann statt
+des Links einen `<button disabled>` mit demselben Aussehen. So gibt es genau eine
+Bedingung für „Anfrage möglich" – der gesperrte Button kann nicht aus Versehen
+gegen die Mail auseinanderlaufen.
 
 ### Pfad der Datei
 

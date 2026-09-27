@@ -28,13 +28,21 @@ interface CalendarDay {
 /** Wie weit im Voraus man blättern kann. */
 const MAX_MONTHS_AHEAD = 24;
 
+/** Grenzen der Gästezähler. Mindestens ein Erwachsener, sonst gibt es keine Anfrage. */
+const MIN_ADULTS = 1;
+const MAX_ADULTS = 12;
+const MAX_CHILDREN = 12;
+
 /**
- * Belegungskalender: ein Kalender, die Wohnung wird oben im Dropdown gewählt.
+ * Anfrage-Abschnitt: Zeitraum prüfen, Gäste angeben, Kontakt aufnehmen.
  *
- * Der Besucher sieht auf einen Blick, welche Nächte frei sind, und kann durch
- * zwei Klicks (Anreise, Abreise) einen Zeitraum wählen. Daraus entsteht eine
- * vorausgefüllte E-Mail – das ist bewusst *keine* Buchung: es gibt kein
- * Backend, das einen Zeitraum verbindlich reservieren könnte.
+ * Die drei Schritte stehen bewusst in einem einzigen Abschnitt, weil sie eine
+ * einzige Handlung sind: der Besucher sieht, ob sein Wunschtermin frei ist,
+ * sagt mit wie vielen Personen er kommt – und erst dann wird der Kontakt-Button
+ * klickbar. Alles Gewählte steht anschliessend in der vorausgefüllten E-Mail.
+ *
+ * Das ist bewusst *keine* Buchung: es gibt kein Backend, das einen Zeitraum
+ * verbindlich reservieren könnte.
  */
 @Component({
   selector: 'app-availability',
@@ -48,6 +56,7 @@ export class Availability {
   readonly text = input.required<string>();
   readonly note = input.required<string>();
   readonly buttonLabel = input.required<string>();
+  readonly image = input.required<{ src: string; alt: string }>();
   /** Nur Id und Name – der Kalender braucht nicht die ganze Wohnung. */
   readonly apartments = input.required<{ id: string; name: string }[]>();
   readonly email = input.required<string>();
@@ -69,6 +78,14 @@ export class Availability {
 
   protected readonly arrival = signal<string | null>(null);
   protected readonly departure = signal<string | null>(null);
+
+  protected readonly adults = signal(2);
+  protected readonly children = signal(0);
+
+  protected readonly canRemoveAdult = computed(() => this.adults() > MIN_ADULTS);
+  protected readonly canAddAdult = computed(() => this.adults() < MAX_ADULTS);
+  protected readonly canRemoveChild = computed(() => this.children() > 0);
+  protected readonly canAddChild = computed(() => this.children() < MAX_CHILDREN);
 
   protected readonly monthTitle = computed(() => {
     const { year, month } = this.month();
@@ -122,16 +139,36 @@ export class Availability {
     () => this.apartments().find((a) => a.id === this.apartmentId())?.name ?? '',
   );
 
-  /** Vorausgefüllte Anfrage-Mail; `null`, solange kein vollständiger Zeitraum gewählt ist. */
+  /** Gästezahl als Text – einmal gebaut, dann in Zusammenfassung und E-Mail gleich. */
+  protected readonly guestsText = computed(() => {
+    const adults = this.adults();
+    const children = this.children();
+    const parts = [`${adults} ${adults === 1 ? 'Erwachsener' : 'Erwachsene'}`];
+    if (children > 0) parts.push(`${children} ${children === 1 ? 'Kind' : 'Kinder'}`);
+    return parts.join(', ');
+  });
+
+  /**
+   * Vorausgefüllte Anfrage-Mail; `null`, solange kein vollständiger Zeitraum
+   * gewählt ist. Genau dann ist auch der Kontakt-Button gesperrt.
+   */
   protected readonly requestLink = computed(() => {
     const from = this.arrival();
     const to = this.departure();
     if (!from || !to) return null;
 
+    const nights = this.nights();
     const subject = `Anfrage ${this.apartmentName()}: ${formatDe(from)} – ${formatDe(to)}`;
     const body =
-      `Guten Tag\n\nIch interessiere mich für ${this.apartmentName()} ` +
-      `vom ${formatDe(from)} bis ${formatDe(to)} (${this.nights()} Nächte).\n\n` +
+      `Guten Tag\n\n` +
+      `Ich interessiere mich für folgenden Aufenthalt:\n\n` +
+      `Wohnung: ${this.apartmentName()}\n` +
+      `Anreise: ${formatDe(from)}\n` +
+      `Abreise: ${formatDe(to)}\n` +
+      `Nächte: ${nights}\n` +
+      `Erwachsene: ${this.adults()}\n` +
+      `Kinder: ${this.children()}\n\n` +
+      `Ist der Zeitraum noch frei?\n\n` +
       `Freundliche Grüsse\n`;
 
     return `mailto:${this.email()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -166,9 +203,22 @@ export class Availability {
     this.departure.set(day.iso);
   }
 
+  protected changeAdults(delta: number): void {
+    this.adults.update((value) => this.clamp(value + delta, MIN_ADULTS, MAX_ADULTS));
+  }
+
+  protected changeChildren(delta: number): void {
+    this.children.update((value) => this.clamp(value + delta, 0, MAX_CHILDREN));
+  }
+
+  /** Nur der Zeitraum wird gelöscht – die Gästezahl bleibt für die nächste Suche stehen. */
   protected clear(): void {
     this.arrival.set(null);
     this.departure.set(null);
+  }
+
+  private clamp(value: number, min: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
   }
 
   /** Monate seit Jahr 0 – macht zwei Monate vergleichbar, ohne Jahr und Monat einzeln zu prüfen. */

@@ -28,7 +28,30 @@
     }
   }
 
+  &__steps {
+    margin: 1.5rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+
+    li::marker {
+      color: var(--blue);
+      font-weight: 600;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 1.75rem;
+  }
+
   &__panel {
+    /* Traegt die Sprungmarke #kontakt – der Sprung soll am Formular landen. */
+    scroll-margin-top: var(--header-height);
     background: var(--surface);
     border-radius: 10px;
     padding: 1.5rem;
@@ -198,10 +221,87 @@
     }
   }
 
+  &__guests {
+    margin: 1.5rem 0 0;
+    padding: 1rem 1.1rem;
+    border: 1px solid #e2e8ee;
+    border-radius: 8px;
+
+    legend {
+      padding: 0 0.4rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+  }
+
+  &__counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    + .availability__counter {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #eef2f6;
+    }
+  }
+
+  &__counter-label {
+    display: flex;
+    flex-direction: column;
+
+    strong {
+      font-size: 0.95rem;
+    }
+
+    span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  }
+
+  &__stepper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+      width: 2.1rem;
+      height: 2.1rem;
+      border: 1px solid #d6dee5;
+      border-radius: 50%;
+      background: white;
+      color: var(--navy);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s ease;
+
+      &:hover:not(:disabled) {
+        background: var(--accent-light);
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+    }
+
+    output {
+      min-width: 1.5rem;
+      text-align: center;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
   &__result {
     margin-top: 1.25rem;
     /* Feste Mindesthöhe, damit der Kalender beim Auswählen nicht springt. */
-    min-height: 5rem;
+    min-height: 6.5rem;
   }
 
   &__summary {
@@ -237,19 +337,28 @@
     gap: 1rem;
   }
 
+  /* Gilt fuer beide Zustaende: <a> sobald der Zeitraum steht, sonst <button disabled>. */
   &__button {
     display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
+    border: 0;
     background: var(--blue);
     color: white;
     padding: 0.7rem 1.3rem;
     border-radius: 6px;
+    font-family: inherit;
     font-weight: 600;
     font-size: 0.95rem;
     transition: background 0.2s ease;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--blue-dark);
+    }
+
+    &:disabled {
+      background: #c3ccd4;
+      cursor: not-allowed;
     }
   }
 

@@ -3,9 +3,17 @@
     <app-section-label>{{ label() }}</app-section-label>
     <h2>{{ title() }}</h2>
     <p>{{ text() }}</p>
+
+    <ol class="availability__steps">
+      <li>Wohnung und Zeitraum im Kalender wählen</li>
+      <li>Erwachsene und Kinder angeben</li>
+      <li>Anfrage abschicken – alles steht schon in der E-Mail</li>
+    </ol>
+
+    <img class="availability__image" [src]="image().src" [alt]="image().alt" loading="lazy" />
   </div>
 
-  <div class="availability__panel">
+  <div class="availability__panel" id="kontakt">
     <label class="availability__picker">
       <span>Wohnung</span>
       <select [value]="apartmentId()" (change)="changeApartment($any($event.target).value)">
@@ -76,24 +84,95 @@
       </ul>
     }
 
+    <fieldset class="availability__guests">
+      <legend>Wie viele Personen reisen an?</legend>
+
+      <div class="availability__counter">
+        <div class="availability__counter-label">
+          <strong>Erwachsene</strong>
+          <span>ab 18 Jahren</span>
+        </div>
+        <div class="availability__stepper">
+          <button
+            type="button"
+            [disabled]="!canRemoveAdult()"
+            (click)="changeAdults(-1)"
+            aria-label="Ein Erwachsener weniger"
+          >
+            &minus;
+          </button>
+          <output aria-live="polite">{{ adults() }}</output>
+          <button
+            type="button"
+            [disabled]="!canAddAdult()"
+            (click)="changeAdults(1)"
+            aria-label="Ein Erwachsener mehr"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <div class="availability__counter">
+        <div class="availability__counter-label">
+          <strong>Kinder</strong>
+          <span>bis 17 Jahre</span>
+        </div>
+        <div class="availability__stepper">
+          <button
+            type="button"
+            [disabled]="!canRemoveChild()"
+            (click)="changeChildren(-1)"
+            aria-label="Ein Kind weniger"
+          >
+            &minus;
+          </button>
+          <output aria-live="polite">{{ children() }}</output>
+          <button
+            type="button"
+            [disabled]="!canAddChild()"
+            (click)="changeChildren(1)"
+            aria-label="Ein Kind mehr"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </fieldset>
+
     <div class="availability__result" aria-live="polite">
       @if (requestLink(); as link) {
         <p class="availability__summary">
           <strong>{{ apartmentName() }}</strong> frei: {{ formatDe(arrival()!) }} &ndash;
-          {{ formatDe(departure()!) }} ({{ nights() }} {{ nights() === 1 ? 'Nacht' : 'Nächte' }})
+          {{ formatDe(departure()!) }} ({{ nights() }} {{ nights() === 1 ? 'Nacht' : 'Nächte' }})<br />
+          {{ guestsText() }}
         </p>
         <div class="availability__actions">
-          <a class="availability__button" [href]="link">{{ buttonLabel() }}</a>
+          <a class="availability__button" [href]="link">
+            {{ buttonLabel() }}
+            <span aria-hidden="true">&rarr;</span>
+          </a>
           <button type="button" class="availability__reset" (click)="clear()">
             Auswahl löschen
           </button>
         </div>
-      } @else if (arrival()) {
-        <p class="availability__summary">
-          Anreise {{ formatDe(arrival()!) }} &ndash; jetzt den Abreisetag wählen.
-        </p>
       } @else {
-        <p class="availability__hint">Anreisetag anklicken, danach den Abreisetag.</p>
+        <p class="availability__summary">
+          @if (arrival()) {
+            Anreise {{ formatDe(arrival()!) }} &ndash; jetzt den Abreisetag wählen.
+          } @else {
+            Anreisetag anklicken, danach den Abreisetag.
+          }
+        </p>
+        <div class="availability__actions">
+          <!-- Gesperrt, solange der Zeitraum unvollständig ist: eine Anfrage ohne
+               Datum hilft niemandem. -->
+          <button class="availability__button" type="button" disabled>
+            {{ buttonLabel() }}
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+          <span class="availability__hint">Zuerst Zeitraum im Kalender wählen</span>
+        </div>
       }
     </div>
 
